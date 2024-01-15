@@ -43,6 +43,9 @@ data={}
 for i in range(len(code)):
     if code[i].startswith("vodka"):
         line=code[i].split()
+#
+#Vodkint
+#
         if len(line)==5 and line[3]=="vodkint":
             if not line[1] in data:
                 try:
@@ -70,9 +73,114 @@ for i in range(len(code)):
                         sys.exit()
                     print("vodka.notint.error : Value is not a int")
                     sys.exit()
-        elif len(line)==5 and line[3]=="vodkint.lenght":
+#
+#Vodkint attributes
+#
+        elif len(line)==5 and line[3]=="vodkint.len":
             if line[4] in data and data[line[4]][0]=="vodkint":
                 data[line[1]]=["vodkint",len(data[line[4]][1])]
+            elif line[4] in data and not data[line[4]][0]=="vodkint":
+                print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
+                sys.exit()
+            else:
+                print("vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+                sys.exit()
+        elif len(line)==6 and line[3]=="vodkint.add":
+            if line[4] in data and data[line[4]][0]=="vodkint":
+                try:
+                    int(line[5])
+                    data[line[1]]=["vodkint",str(int(data[line[4]][1])+int(line[5]))]
+                except:
+                    print("vodka.notint.error : \""+line[5]+"\" is not a int.")
+                    sys.exit()
+            elif line[4] in data and not data[line[4]][0]=="vodkint":
+                print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
+                sys.exit()
+            else:
+                print("vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+                sys.exit()
+        elif len(line)==6 and line[3]=="vodkint.sub":
+            if line[4] in data and data[line[4]][0]=="vodkint":
+                try:
+                    int(line[5])
+                    data[line[1]]=["vodkint",str(int(data[line[4]][1])-int(line[5]))]
+                except:
+                    print("vodka.notint.error : \""+line[5]+"\" is not a int.")
+                    sys.exit()
+            elif line[4] in data and not data[line[4]][0]=="vodkint":
+                print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
+                sys.exit()
+            else:
+                print("vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+                sys.exit()
+        elif len(line)==6 and line[3]=="vodkint.time":
+            if line[4] in data and data[line[4]][0]=="vodkint":
+                try:
+                    int(line[5])
+                    data[line[1]]=["vodkint",str(int(data[line[4]][1])*int(line[5]))]
+                except:
+                    print("vodka.notint.error : \""+line[5]+"\" is not a int.")
+                    sys.exit()
+            elif line[4] in data and not data[line[4]][0]=="vodkint":
+                print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
+                sys.exit()
+            else:
+                print("vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+                sys.exit()
+        elif len(line)==6 and line[3]=="vodkint.div":
+            if line[4] in data and data[line[4]][0]=="vodkint":
+                try:
+                    int(line[5])
+                    data[line[1]]=["vodkint",str(int(int(data[line[4]][1])/int(line[5])))]
+                except ZeroDivisionError:
+                    print("vodka.zerodivision.error : Can't divide by 0.")
+                    sys.exit()
+                except:
+                    print("vodka.notint.error : \""+line[5]+"\" is not a int.")
+                    sys.exit()
+            elif line[4] in data and not data[line[4]][0]=="vodkint":
+                print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
+                sys.exit()
+            else:
+                print("vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+                sys.exit()
+        elif len(line)==6 and line[3]=="vodkint.dive":
+            if line[4] in data and data[line[4]][0]=="vodkint":
+                try:
+                    int(line[5])
+                    data[line[1]]=["vodkint",str(int(int(data[line[4]][1])//int(line[5])))]
+                except ZeroDivisionError:
+                    print("vodka.zerodivision.error : Can't divide by 0.")
+                    sys.exit()
+                except:
+                    print("vodka.notint.error : \""+line[5]+"\" is not a int.")
+                    sys.exit()
+            elif line[4] in data and not data[line[4]][0]=="vodkint":
+                print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
+                sys.exit()
+            else:
+                print("vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+                sys.exit()
+        elif len(line)==6 and line[3]=="vodkint.mod":
+            if line[4] in data and data[line[4]][0]=="vodkint":
+                try:
+                    int(line[5])
+                    data[line[1]]=["vodkint",str(int(int(data[line[4]][1])%int(line[5])))]
+                except ZeroDivisionError:
+                    print("vodka.zerodivision.error : Can't divide by 0.")
+                    sys.exit()
+                except:
+                    print("vodka.notint.error : \""+line[5]+"\" is not a int.")
+                    sys.exit()
+            elif line[4] in data and not data[line[4]][0]=="vodkint":
+                print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
+                sys.exit()
+            else:
+                print("vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+                sys.exit()
+        elif len(line)==5 and line[3]=="vodkint.abs":
+            if line[4] in data and data[line[4]][0]=="vodkint":
+                data[line[1]]=["vodkint",abs(int(data[line[4]][1]))]
             elif line[4] in data and not data[line[4]][0]=="vodkint":
                 print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
                 sys.exit()
@@ -82,6 +190,9 @@ for i in range(len(code)):
         else:
             print("vodka.syntax.error : Syntax not correct")
             sys.exit()
+#
+#Vodimp
+#
     elif code[i].startswith("vodimp"):
         line=code[i].split()
         if line[1]=="vodkint":
@@ -118,6 +229,9 @@ for i in range(len(code)):
         else:
             print("vodka.syntax.error : Syntax not correct.")
             sys.exit()
+#
+#Vodprint
+#
     elif code[i].startswith("vodprint"):
         line=code[i].split()
         if len(line)==2:
@@ -133,6 +247,9 @@ for i in range(len(code)):
         else:
             print("vodka.syntax.error : Can't print several variables at once.")
             sys.exit()
+#
+#Vodexp
+#
     elif code[i].startswith("vodexp"):
         line=code[i].split()
         if len(line)>2:
@@ -158,7 +275,7 @@ for i in range(len(code)):
             print("vodka.syntax.error : Syntax not correct.")
             sys.exit()
     elif code[i]=="vodabout":
-        print("Vodka v0.1.4")
+        print("Vodka v0.1.5")
     else:
         if not code[i]=="":
             print("vodka.syntax.error : '"+code[i]+"' is not a function.")
