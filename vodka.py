@@ -70,6 +70,15 @@ for i in range(len(code)):
                         sys.exit()
                     print("vodka.notint.error : Value is not a int")
                     sys.exit()
+        elif len(line)==5 and line[3]=="vodkint.lenght":
+            if line[4] in data and data[line[4]][0]=="vodkint":
+                data[line[1]]=["vodkint",len(data[line[4]][1])]
+            elif line[4] in data and not data[line[4]][0]=="vodkint":
+                print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
+                sys.exit()
+            else:
+                print("vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+                sys.exit()
         else:
             print("vodka.syntax.error : Syntax not correct")
             sys.exit()
@@ -149,7 +158,7 @@ for i in range(len(code)):
             print("vodka.syntax.error : Syntax not correct.")
             sys.exit()
     elif code[i]=="vodabout":
-        print("Vodka v0.1.3")
+        print("Vodka v0.1.4")
     else:
         if not code[i]=="":
             print("vodka.syntax.error : '"+code[i]+"' is not a function.")
