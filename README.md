@@ -24,6 +24,11 @@ To import a .txt file with a data type, type:
 
 vodimp data_type name_of_the_variable_without_space absolute_path_to_the_file
 
+To store the lenght of a variable :
+
+vodka a = vodkint 123
+vodka b = vodkint.lenght a
+
 To display the Vodka version:
 
 vodabout
