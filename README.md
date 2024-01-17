@@ -1,5 +1,6 @@
 Vodka is a new experimental description language for creating different types of data in lines of code. Here are the types of codes currently supported as well as their designation:
 - integer: vodkint
+- float: vodfloat
 
 For creating a new object, type in a .vod file the following syntax:
 vodka name_of_the_object_without_space = designation_of_the_data_type content
