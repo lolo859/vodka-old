@@ -4,10 +4,10 @@ try:
     file=files[1]
     files.remove("vodka")
     files.remove(files[0])
-    if "-debug" in files:
-        debug=1
-    else:
+    if "-noerror" in files:
         debug=0
+    else:
+        debug=1
 except:
     print("vodka.arg.error : File not found")
     sys.exit()
@@ -15,7 +15,7 @@ if not file.endswith(".vod"):
     print("vodka.filetype.error : File is not a .vod file")
     sys.exit()
 if not os.path.exists(file):
-    print("vodka.filenotfound.error : File don't exist")
+    print("vodka.filenotfound.error : File doesn't exist")
     sys.exit()
 fileline=open(file,"r").readlines()
 try:
@@ -47,13 +47,14 @@ for i in range(start+1,end):
     code.append(fileline[i])
 data={}
 if debug==1:
-    def ende(content):
+    def ende(content,error):
         lineh=fileline.index(content)
-        print("Line "+str(lineh)+" :")
-        print("  "+content)
+        print("File \""+os.path.abspath(file)+"\", line "+str(lineh+1)+" :")
+        print("   "+content)
+        print(error)
         sys.exit()
 else:
-    def ende(content):
+    def ende(content,error):
         sys.exit()
 for i in range(len(code)):
     if code[i].startswith("vodka"):
@@ -68,20 +69,20 @@ for i in range(len(code)):
                     data[line[1]]=["vodkint",line[4]]
                 except:
                     if len(line[4])>4300:
-                        print("vodka.maxintlimit.error : Value has too many digits")
-                        ende(code[i])
-                    print("vodka.notint.error : Value is not a int")
-                    ende(code[i])
+                        print()
+                        ende(code[i],"vodka.maxintlimit.error : Value has too many digits.")
+                    print()
+                    ende(code[i],"vodka.notint.error : Value is not a int.")
             else:
                 try:
                     int(line[4])
                     data[line[1]]=["vodkint",line[4]]
                 except:
                     if len(line[4])>4300:
-                        print("vodka.maxintlimit.error : Value has too many digits")
-                        ende(code[i])
-                    print("vodka.notint.error : Value is not a int")
-                    ende(code[i])
+                        print()
+                        ende(code[i],"vodka.maxintlimit.error : Value has too many digits.")
+                    print()
+                    ende(code[i],"vodka.notint.error : Value is not a int.")
 #
 #Vodkint attributes
 #
@@ -89,127 +90,157 @@ for i in range(len(code)):
             if line[4] in data and data[line[4]][0]=="vodkint":
                 data[line[1]]=["vodkint",len(data[line[4]][1])]
             elif line[4] in data and not data[line[4]][0]=="vodkint":
-                print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notint.error : "+line[4]+" is not vodkint's type.")
             else:
-                print("vodka.notdefined.error : \""+line[4]+"\" is not defined.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
         elif len(line)==6 and line[3]=="vodkint.add":
             if line[4] in data and data[line[4]][0]=="vodkint":
                 try:
+                    if len(line[4])>4300:
+                        print()
+                        ende(code[i],"vodka.maxintlimit.error : Value has too many digits.")
                     int(line[5])
                     data[line[1]]=["vodkint",str(int(data[line[4]][1])+int(line[5]))]
                 except:
-                    print("vodka.notint.error : \""+line[5]+"\" is not a int.")
-                    ende(code[i])
+                    print()
+                    ende(code[i],"vodka.notint.error : \""+line[5]+"\" is not a int.")
             elif line[4] in data and not data[line[4]][0]=="vodkint":
-                print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notint.error : "+line[4]+" is not vodkint's type.")
             else:
-                print("vodka.notdefined.error : \""+line[4]+"\" is not defined.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
         elif len(line)==6 and line[3]=="vodkint.sub":
             if line[4] in data and data[line[4]][0]=="vodkint":
                 try:
+                    if len(line[4])>4300:
+                        print()
+                        ende(code[i],"vodka.maxintlimit.error : Value has too many digits.")
                     int(line[5])
                     data[line[1]]=["vodkint",str(int(data[line[4]][1])-int(line[5]))]
                 except:
-                    print("vodka.notint.error : \""+line[5]+"\" is not a int.")
-                    ende(code[i])
+                    print()
+                    ende(code[i],"vodka.notint.error : \""+line[5]+"\" is not a int.")
             elif line[4] in data and not data[line[4]][0]=="vodkint":
-                print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notint.error : "+line[4]+" is not vodkint's type.")
             else:
-                print("vodka.notdefined.error : \""+line[4]+"\" is not defined.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
         elif len(line)==6 and line[3]=="vodkint.time":
             if line[4] in data and data[line[4]][0]=="vodkint":
                 try:
+                    if len(line[4])>4300:
+                        print()
+                        ende(code[i],"vodka.maxintlimit.error : Value has too many digits.")
                     int(line[5])
                     data[line[1]]=["vodkint",str(int(data[line[4]][1])*int(line[5]))]
                 except:
-                    print("vodka.notint.error : \""+line[5]+"\" is not a int.")
-                    ende(code[i])
+                    print()
+                    ende(code[i],"vodka.notint.error : \""+line[5]+"\" is not a int.")
             elif line[4] in data and not data[line[4]][0]=="vodkint":
-                print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notint.error : "+line[4]+" is not vodkint's type.")
             else:
-                print("vodka.notdefined.error : \""+line[4]+"\" is not defined.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
         elif len(line)==6 and line[3]=="vodkint.div":
             if line[4] in data and data[line[4]][0]=="vodkint":
                 try:
+                    if len(line[4])>4300:
+                        print()
+                        ende(code[i],"vodka.maxintlimit.error : Value has too many digits.")
                     int(line[5])
                     data[line[1]]=["vodkint",str(int(int(data[line[4]][1])/int(line[5])))]
                 except ZeroDivisionError:
-                    print("vodka.zerodivision.error : Can't divide by 0.")
-                    ende(code[i])
+                    print()
+                    ende(code[i],"vodka.zerodivision.error : Can't divide by 0.")
                 except:
-                    print("vodka.notint.error : \""+line[5]+"\" is not a int.")
-                    ende(code[i])
+                    print()
+                    ende(code[i],"vodka.notint.error : \""+line[5]+"\" is not a int.")
             elif line[4] in data and not data[line[4]][0]=="vodkint":
-                print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notint.error : "+line[4]+" is not vodkint's type.")
             else:
-                print("vodka.notdefined.error : \""+line[4]+"\" is not defined.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
         elif len(line)==6 and line[3]=="vodkint.dive":
             if line[4] in data and data[line[4]][0]=="vodkint":
                 try:
+                    if len(line[4])>4300:
+                        print()
+                        ende(code[i],"vodka.maxintlimit.error : Value has too many digits.")
                     int(line[5])
                     data[line[1]]=["vodkint",str(int(int(data[line[4]][1])//int(line[5])))]
                 except ZeroDivisionError:
-                    print("vodka.zerodivision.error : Can't divide by 0.")
-                    ende(code[i])
+                    print()
+                    ende(code[i],"vodka.zerodivision.error : Can't divide by 0.")
                 except:
-                    print("vodka.notint.error : \""+line[5]+"\" is not a int.")
-                    ende(code[i])
+                    print()
+                    ende(code[i],"vodka.notint.error : \""+line[5]+"\" is not a int.")
             elif line[4] in data and not data[line[4]][0]=="vodkint":
-                print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notint.error : "+line[4]+" is not vodkint's type.")
             else:
-                print("vodka.notdefined.error : \""+line[4]+"\" is not defined.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
         elif len(line)==6 and line[3]=="vodkint.mod":
             if line[4] in data and data[line[4]][0]=="vodkint":
                 try:
+                    if len(line[4])>4300:
+                        print()
+                        ende(code[i],"vodka.maxintlimit.error : Value has too many digits.")
                     int(line[5])
                     data[line[1]]=["vodkint",str(int(int(data[line[4]][1])%int(line[5])))]
                 except ZeroDivisionError:
-                    print("vodka.zerodivision.error : Can't divide by 0.")
-                    ende(code[i])
+                    print()
+                    ende(code[i],"vodka.zerodivision.error : Can't divide by 0.")
                 except:
-                    print("vodka.notint.error : \""+line[5]+"\" is not a int.")
-                    ende(code[i])
+                    print()
+                    ende(code[i],"vodka.notint.error : \""+line[5]+"\" is not a int.")
             elif line[4] in data and not data[line[4]][0]=="vodkint":
-                print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notint.error : "+line[4]+" is not vodkint's type.")
             else:
-                print("vodka.notdefined.error : \""+line[4]+"\" is not defined.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
         elif len(line)==5 and line[3]=="vodkint.abs":
             if line[4] in data and data[line[4]][0]=="vodkint":
                 data[line[1]]=["vodkint",abs(int(data[line[4]][1]))]
             elif line[4] in data and not data[line[4]][0]=="vodkint":
-                print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notint.error : "+line[4]+" is not vodkint's type.")
             else:
-                print("vodka.notdefined.error : \""+line[4]+"\" is not defined.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
         elif len(line)==6 and line[3]=="vodkint.exp":
             if line[4] in data and data[line[4]][0]=="vodkint":
                 try:
+                    if len(line[4])>4300:
+                        print()
+                        ende(code[i],"vodka.maxintlimit.error : Value has too many digits.")
                     int(line[5])
                     data[line[1]]=["vodkint",str(int(data[line[4]][1])**int(line[5]))]
                 except:
-                    print("vodka.notint.error : \""+line[5]+"\" is not a int.")
-                    ende(code[i])
+                    print()
+                    ende(code[i],"vodka.notint.error : \""+line[5]+"\" is not a int.")
             elif line[4] in data and not data[line[4]][0]=="vodkint":
-                print("vodka.notint.error : "+line[4]+" is not vodkint's type.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notint.error : "+line[4]+" is not vodkint's type.")
             else:
-                print("vodka.notdefined.error : \""+line[4]+"\" is not defined.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+        elif len(line)==5 and line[3]=="vodkint.convfloat":
+            if line[4] in data and data[line[4]][0]=="vodfloat":
+                data[line[1]]=["vodkint",str(int(float(data[line[4]][1])))]
+            elif line[4] in data and not data[line[4]][0]=="vodfloat":
+                print()
+                ende(code[i],"vodka.notfloat.error : "+line[4]+" is not vodfloat's type.")
+            else:
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
 #
 #Vodfloat
 #
@@ -219,18 +250,39 @@ for i in range(len(code)):
                     float(line[4])
                     data[line[1]]=["vodfloat",line[4]]
                 except:
-                    print("vodka.notfloat.error : Value is not a float.")
-                    ende(code[i])
+                    print()
+                    ende(code[i],"vodka.notfloat.error : Value is not a float.")
             else:
                 try:
                     float(line[4])
                     data[line[1]]=["vodfloat",line[4]]
                 except:
-                    print("vodka.notfloat.error : Value is not a float.")
-                    ende(code[i])
+                    print()
+                    ende(code[i],"vodka.notfloat.error : Value is not a float.")
+#
+#Vodfloat attributes
+#
+        elif len(line)==5 and line[3]=="vodfloat.convint":
+            if line[4] in data and data[line[4]][0]=="vodkint":
+                data[line[1]]=["vodfloat",data[line[4]][1]]
+            elif line[4] in data and not data[line[4]][0]=="vodkint":
+                print()
+                ende(code[i],"vodka.notfloat.error : "+line[4]+" is not vodkint's type.")
+            else:
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+#
+#Vodtype
+#
+        elif len(line)==5 and line[3]=="vodtype":
+            if line[4] in data:
+                data[line[1]]=["vodtype",data[line[4]][0]]
+            else:
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
         else:
-            print("vodka.syntax.error : Syntax not correct.")
-            ende(code[i])
+            print()
+            ende(code[i],"vodka.syntax.error : Syntax not correct.")
 #
 #Vodimp
 #
@@ -240,17 +292,17 @@ for i in range(len(code)):
             startt=len(line[2])+16
             importt=code[i][startt::]
             if not os.path.exists(importt):
-                print("vodka.filenotfound.error : File doesn't exist.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.filenotfound.error : File doesn't exist.")
             if not importt.endswith(".txt"):
-                print("vodka.filetype.error : File isn't a .txt file.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.filetype.error : File isn't a .txt file.")
             text=open(importt,"r").readlines()
             try:
                 text=text[0]
             except IndexError:
-                print("vodka.firstlineempty.error : First line of the file is empty.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.firstlineempty.error : First line of the file is empty.")
             try:
                 text=text.rstrip("\n")
             except:
@@ -260,25 +312,25 @@ for i in range(len(code)):
                 data[line[2]]=["vodkint",text]
             except ValueError:
                 if len(text)>4300:
-                    print("vodka.maxintlimit.error : Value has too many digits.")
-                    ende(code[i])
-                print("vodka.notint.error : Value is not a int.")
-                ende(code[i])
+                    print()
+                    ende(code[i],"vodka.maxintlimit.error : Value has too many digits.")
+                print()
+                ende(code[i],"vodka.notint.error : Value is not a int.")
         elif line[1]=="vodfloat":
             startt=len(line[2])+17
             importt=code[i][startt::]
             if not os.path.exists(importt):
-                print("vodka.filenotfound.error : File doesn't exist.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.filenotfound.error : File doesn't exist.")
             if not importt.endswith(".txt"):
-                print("vodka.filetype.error : File isn't a .txt file.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.filetype.error : File isn't a .txt file.")
             text=open(importt,"r").readlines()
             try:
                 text=text[0]
             except IndexError:
-                print("vodka.firstlineempty.error : First line of the file is empty.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.firstlineempty.error : First line of the file is empty.")
             try:
                 text=text.rstrip("\n")
             except:
@@ -287,11 +339,11 @@ for i in range(len(code)):
                 float(text)
                 data[line[2]]=["vodfloat",text]
             except ValueError:
-                print("vodka.notfloat.error : Value is not a float.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notfloat.error : Value is not a float.")
         else:
-            print("vodka.syntax.error : Syntax not correct.")
-            ende(code[i])
+            print()
+            ende(code[i],"vodka.syntax.error : Syntax not correct.")
 #
 #Vodprint
 #
@@ -303,17 +355,20 @@ for i in range(len(code)):
                     print(data[line[1]][1])
                 elif data[line[1]][0]=="vodfloat":
                     print(data[line[1]][1])
+                elif data[line[1]][0]=="vodtype":
+                    print(data[line[1]][1])
                 else:
-                    print("vodka.unknowtype.error : \""+data[line[1]][0]+"\" is not a type.")
+                    print()
+                    ende(code[i],"vodka.unknowtype.error : \""+data[line[1]][0]+"\" is not a type.")
             except KeyError:
-                print("vodka.notdefined.error : \""+line[1]+"\" is not defined.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[1]+"\" is not defined.")
         elif len(line)==1:
-            print("vodka.syntax.error : Can't find any variable to print.")
-            ende(code[i])
+            print()
+            ende(code[i],"vodka.syntax.error : Can't find any variable to print.")
         else:
-            print("vodka.syntax.error : Can't print several variables at once.")
-            ende(code[i])
+            print()
+            ende(code[i],"vodka.syntax.error : Can't print several variables at once.")
 #
 #Vodexp
 #
@@ -324,32 +379,32 @@ for i in range(len(code)):
                 startt=len(line[1])+8
                 exportt=code[i][startt::]
                 if not os.path.exists(exportt):
-                    print("vodka.filenotvalid.error : File doesn't exists.")
-                    ende(code[i])
+                    print()
+                    ende(code[i],"vodka.filenotvalid.error : File doesn't exists.")
                 if not exportt.endswith(".txt"):
-                    print("vodka.filetype.error : File isn't a .txt file.")
-                    ende(code[i])
+                    print()
+                    ende(code[i],"vodka.filetype.error : File isn't a .txt file.")
                 if data[line[1]][0]=="vodkint":
                     try:
                         open(exportt,"w").write(str(data[line[1]][1]))
                     except:
-                        print("vodka.unknow.error : An unknow error happen. Please verify the file exists before retry.")
-                        ende(code[i])
+                        print()
+                        ende(code[i],"vodka.unknow.error : An unknow error happen. Please verify the file exists before retry.")
                 elif data[line[1]][0]=="vodfloat":
                     try:
                         open(exportt,"w").write(str(data[line[1]][1]))
                     except:
-                        print("vodka.unknow.error : An unknow error happen. Please verify the file exists before retry.")
-                        ende(code[i])
+                        print()
+                        ende(code[i],"vodka.unknow.error : An unknow error happen. Please verify the file exists before retry.")
             else:
-                print("vodka.notdefined.error : \""+line[1]+"\" is not defined.")
-                ende(code[i])
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[1]+"\" is not defined.")
         else:
-            print("vodka.syntax.error : Syntax not correct.")
-            ende(code[i])
+            print()
+            ende(code[i],"vodka.syntax.error : Syntax not correct.")
     elif code[i]=="vodabout":
-        print("Vodka v0.2.0")
+        print("Vodka v0.2.1")
     else:
         if not code[i]=="":
-            print("vodka.syntax.error : '"+code[i]+"' is not a function.")
-            ende(code[i])
+            print()
+            ende(code[i],"vodka.syntax.error : '"+code[i]+"' is not a function.")
