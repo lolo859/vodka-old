@@ -271,6 +271,141 @@ for i in range(len(code)):
             else:
                 print()
                 ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+        elif len(line)==5 and line[3]=="vodfloat.len":
+            if line[4] in data and data[line[4]][0]=="vodfloat":
+                data[line[1]]=["vodkint",len(data[line[4]][1])]
+            elif line[4] in data and not data[line[4]][0]=="vodfloat":
+                print()
+                ende(code[i],"vodka.nofloat.error : "+line[4]+" is not vodfloat's type.")
+            else:
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+        elif len(line)==5 and line[3]=="vodfloat.lenu":
+            if line[4] in data and data[line[4]][0]=="vodfloat":
+                truc=str(int(float(data[line[4]][1])))
+                data[line[1]]=["vodkint",len(truc)]
+            elif line[4] in data and not data[line[4]][0]=="vodfloat":
+                print()
+                ende(code[i],"vodka.nofloat.error : "+line[4]+" is not vodfloat's type.")
+            else:
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+        elif len(line)==5 and line[3]=="vodfloat.lend":
+            if line[4] in data and data[line[4]][0]=="vodfloat":
+                truc=int(float(data[line[4]][1]))
+                trux=data[line[4]][1][len(str(truc))+1::]
+                data[line[1]]=["vodkint",len(trux)]
+            elif line[4] in data and not data[line[4]][0]=="vodfloat":
+                print()
+                ende(code[i],"vodka.nofloat.error : "+line[4]+" is not vodfloat's type.")
+            else:
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+        elif len(line)==5 and line[3]=="vodfloat.unit":
+            if line[4] in data and data[line[4]][0]=="vodfloat":
+                truc=data[line[4]][1].split(".")[0]
+                data[line[1]]=["vodkint",truc]
+            elif line[4] in data and not data[line[4]][0]=="vodfloat":
+                print()
+                ende(code[i],"vodka.nofloat.error : "+line[4]+" is not vodfloat's type.")
+            else:
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+        elif len(line)==5 and line[3]=="vodfloat.decimal":
+            if line[4] in data and data[line[4]][0]=="vodfloat":
+                truc=data[line[4]][1].split(".")[1]
+                data[line[1]]=["vodkint",truc]
+            elif line[4] in data and not data[line[4]][0]=="vodfloat":
+                print()
+                ende(code[i],"vodka.nofloat.error : "+line[4]+" is not vodfloat's type.")
+            else:
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+        elif len(line)==6 and line[3]=="vodfloat.add":
+            if line[4] in data and data[line[4]][0]=="vodfloat":
+                try:
+                    float(line[5])
+                    data[line[1]]=["vodfloat",str(float(data[line[4]][1])+float(line[5]))]
+                except:
+                    print()
+                    ende(code[i],"vodka.notfloat.error : \""+line[5]+"\" is not a float.")
+            elif line[4] in data and not data[line[4]][0]=="vodfloat":
+                print()
+                ende(code[i],"vodka.notfloat.error : "+line[4]+" is not vodfloat's type.")
+            else:
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+        elif len(line)==6 and line[3]=="vodfloat.sub":
+            if line[4] in data and data[line[4]][0]=="vodfloat":
+                try:
+                    float(line[5])
+                    data[line[1]]=["vodfloat",str(float(data[line[4]][1])-float(line[5]))]
+                except:
+                    print()
+                    ende(code[i],"vodka.notfloat.error : \""+line[5]+"\" is not a float.")
+            elif line[4] in data and not data[line[4]][0]=="vodfloat":
+                print()
+                ende(code[i],"vodka.notfloat.error : "+line[4]+" is not vodfloat's type.")
+            else:
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+        elif len(line)==6 and line[3]=="vodfloat.time":
+            if line[4] in data and data[line[4]][0]=="vodfloat":
+                try:
+                    float(line[5])
+                    data[line[1]]=["vodfloat",str(float(data[line[4]][1])*float(line[5]))]
+                except:
+                    print()
+                    ende(code[i],"vodka.vodfloat.error : \""+line[5]+"\" is not a float.")
+            elif line[4] in data and not data[line[4]][0]=="vodfloat":
+                print()
+                ende(code[i],"vodka.notfloat.error : "+line[4]+" is not vodfloat's type.")
+            else:
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+        elif len(line)==6 and line[3]=="vodfloat.div":
+            if line[4] in data and data[line[4]][0]=="vodfloat":
+                try:
+                    float(line[5])
+                    data[line[1]]=["vodfloat",str(float(float(data[line[4]][1])/float(line[5])))]
+                except ZeroDivisionError:
+                    print()
+                    ende(code[i],"vodka.zerodivision.error : Can't divide by 0.")
+                except:
+                    print()
+                    ende(code[i],"vodka.notfloat.error : \""+line[5]+"\" is not a float.")
+            elif line[4] in data and not data[line[4]][0]=="vodfloat":
+                print()
+                ende(code[i],"vodka.notfloat.error : "+line[4]+" is not vodfloat's type.")
+            else:
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+        elif len(line)==6 and line[3]=="vodfloat.mod":
+            if line[4] in data and data[line[4]][0]=="vodfloat":
+                try:
+                    float(line[5])
+                    data[line[1]]=["vodfloat",str(float(float(data[line[4]][1])%float(line[5])))]
+                except ZeroDivisionError:
+                    print()
+                    ende(code[i],"vodka.zerodivision.error : Can't divide by 0.")
+                except:
+                    print()
+                    ende(code[i],"vodka.notfloat.error : \""+line[5]+"\" is not a float.")
+            elif line[4] in data and not data[line[4]][0]=="vodfloat":
+                print()
+                ende(code[i],"vodka.notfloat.error : "+line[4]+" is not vodfloat's type.")
+            else:
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
+        elif len(line)==5 and line[3]=="vodfloat.abs":
+            if line[4] in data and data[line[4]][0]=="vodfloat":
+                data[line[1]]=["vodfloat",abs(float(data[line[4]][1]))]
+            elif line[4] in data and not data[line[4]][0]=="vodfloat":
+                print()
+                ende(code[i],"vodka.notfloat.error : "+line[4]+" is not vodfloat's type.")
+            else:
+                print()
+                ende(code[i],"vodka.notdefined.error : \""+line[4]+"\" is not defined.")
 #
 #Vodtype
 #
@@ -403,7 +538,9 @@ for i in range(len(code)):
             print()
             ende(code[i],"vodka.syntax.error : Syntax not correct.")
     elif code[i]=="vodabout":
-        print("Vodka v0.2.1")
+        print("Vodka v0.2.2")
+    elif code[i]=="vodata":
+        print(data)
     else:
         if not code[i]=="":
             print()
