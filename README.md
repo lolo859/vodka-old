@@ -2,6 +2,7 @@ Vodka is a new experimental description language for creating different types of
 - integer: vodkint
 - float: vodfloat
 - type (a special data type that can only store the type of a variable): vodtype
+- raw text : vodtext
 
 For creating a new object, type in a .vod file the following syntax:
 vodka name_of_the_object_without_space = designation_of_the_data_type content
@@ -26,21 +27,30 @@ To import a .txt file with a data type, type:
 
 vodimp data_type name_of_the_variable_without_space absolute_path_to_the_file
 
-To store the lenght of a variable :
+To use a type's function :
 
 vodka a = vodkint 123
+
 vodka b = vodkint.lenght a
 
 To convert variable, type :
 
 vodka a = vodkint 45
+
 vodka b = vodfloat.convint a
 
 To store the type of a variable type :
 
 vodka a = vodkint 45
+
 vodka b = vodtype a
 
 To display the Vodka version:
 
 vodabout
+
+To duplicate variable :
+
+vodka a = vodkint 3
+
+vodka b = vodka a
