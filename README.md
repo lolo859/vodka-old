@@ -3,6 +3,7 @@ Vodka is a new experimental description language for creating different types of
 - float: vodfloat
 - type (a special data type that can only store the type of a variable): vodtype
 - raw text : vodtext
+- text : vodstring
 
 For creating a new object, type in a .vod file the following syntax:
 vodka name_of_the_object_without_space = designation_of_the_data_type content
@@ -54,3 +55,33 @@ To duplicate variable :
 vodka a = vodkint 3
 
 vodka b = vodka a
+
+To create function named add.vodf :
+
+VODSTART a b
+
+vodka c = vodkint.add a b
+
+VODEND c
+
+To use this function :
+
+VODSTART
+
+vodfunc add
+
+vodka a = vodkint 2
+
+vodka b = vodkint 3
+
+vodka c = add a b
+
+VODEND
+
+To comment :
+
+VODSTART
+
+vodabout § This will show the Vodka's version
+
+VODEND
