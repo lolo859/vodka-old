@@ -1,3 +1,5 @@
+We are assuming you put the Vodka's executable in a folder being in the PATH variable.
+
 Vodka is a new experimental description language for creating different types of data in lines of code. Here are the types of codes currently supported as well as their designation:
 - integer: vodkint
 - float: vodfloat
